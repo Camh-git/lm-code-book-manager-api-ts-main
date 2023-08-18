@@ -22,3 +22,7 @@ export const updateBook = async (bookId: number, book: Book) => {
 		},
 	});
 };
+//Task 1 -	User Story: As a user, I want to use the Book Manager API to delete a book using its ID`
+export const deleteBook = async (bookId: number) => {
+	return Book.destroy({ where: { bookId } });
+};

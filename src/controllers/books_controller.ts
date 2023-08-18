@@ -35,3 +35,10 @@ export const updateBook = async (req: Request, res: Response) => {
 	const book = await bookService.updateBook(bookId, bookUpdateData);
 	res.status(204).json(book);
 };
+
+//Task 1 -	User Story: As a user, I want to use the Book Manager API to delete a book using its ID`
+export const deleteBook = async (req: Request, res: Response) => {
+	const bookId = Number.parseInt(req.params.bookId);
+	const book = await bookService.deleteBook(bookId);
+	res.status(200).json(book);
+};
