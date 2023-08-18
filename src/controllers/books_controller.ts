@@ -3,7 +3,11 @@ import * as bookService from "../services/books";
 
 export const getBooks = async (req: Request, res: Response) => {
 	const books = await bookService.getBooks();
-	res.json(books).status(200);
+	if (books) {
+		res.json(books).status(200);
+	} else {
+		res.status(404).json("No books found");
+	}
 };
 
 export const getBook = async (req: Request, res: Response) => {
@@ -42,6 +46,10 @@ export const updateBook = async (req: Request, res: Response) => {
 //Task 1 -	User Story: As a user, I want to use the Book Manager API to delete a book using its ID`
 export const deleteBook = async (req: Request, res: Response) => {
 	const bookId = Number.parseInt(req.params.bookId);
-	const book = await bookService.deleteBook(bookId);
-	res.status(200).json(book);
+	try {
+		const book = await bookService.deleteBook(bookId);
+		res.status(200).json(book);
+	} catch (error) {
+		res.status(400).json({ message: (error as Error).message });
+	}
 };
