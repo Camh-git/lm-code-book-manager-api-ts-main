@@ -13,7 +13,7 @@ export const getBook = async (req: Request, res: Response) => {
 	if (book) {
 		res.json(book).status(200);
 	} else {
-		res.status(404).json("Not found");
+		res.status(404).json("Book not found"); //This appears to be what the second extra task is asking for, but it already exists
 	}
 };
 
@@ -23,7 +23,7 @@ export const saveBook = async (req: Request, res: Response) => {
 		const book = await bookService.saveBook(bookToBeSaved);
 		res.status(201).json(book);
 	} catch (error) {
-		res.status(400).json({ message: (error as Error).message });
+		res.status(400).json({ message: (error as Error).message }); //This appears to be what the first extra task is asking for, but it already exists
 	}
 };
 
@@ -31,9 +31,12 @@ export const saveBook = async (req: Request, res: Response) => {
 export const updateBook = async (req: Request, res: Response) => {
 	const bookUpdateData = req.body;
 	const bookId = Number.parseInt(req.params.bookId);
-
-	const book = await bookService.updateBook(bookId, bookUpdateData);
-	res.status(204).json(book);
+	try {
+		const book = await bookService.updateBook(bookId, bookUpdateData);
+		res.status(204).json(book);
+	} catch (error) {
+		res.status(400).json({ message: (error as Error).message });
+	}
 };
 
 //Task 1 -	User Story: As a user, I want to use the Book Manager API to delete a book using its ID`
